@@ -1,0 +1,131 @@
+<font color=#0099ff size=5 face="黑体">Git 基本操作</font>
+
+
+
+###1、取Git项目的Git仓库
+####1)在工作目录中初始化新仓库
+$git init
+<br />$git add 文件名
+<br />...
+<br />$git commit -m 'initial project version'
+####2）从现有仓库克隆(克隆AA到本地BB文件夹),git://是一种协议
+$git clone git://github.com/AA BB
+
+###2、检查更新与更新
+$git status
+<br />如果提示# Changes to be committed:,说明更新了，这是可用git add命令
+###3、忽略某些文件
+
+
+$cat .gitignore *.X
+####*一些例子*
+<br /># 此为注释 – 将被 Git 忽略
+<br />*.a       
+<br /># 忽略所有 .a 结尾的文件
+<br />!lib.a    
+<br /># 但 lib.a 除外
+<br />/TODO     
+<br /># 仅仅忽略项目根目录下的 TODO 文件，不包括 subdir/TODO
+<br />build/    
+<br /># 忽略 build/ 目录下的所有文件
+<br />doc/*.txt 
+<br /># 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
+
+###4、查看尚未暂存文件更新了那些部分
+<br />(此命令比较的是工作目录中当前文件和暂存区域快照之间的差异，也就是修改之后还没有暂存起来的变化内容)
+<br />$git diff
+
+
+###5、跳过使用暂存区域
+<br />$git status
+<br />$git cmmit -a -m 'added new benchmarks'
+
+###6、移除文件（从Git移除某个文件，先从暂存区域移除，然后提交），例如移除A
+<br />$rm A
+<br />$git status 
+<br />$git rm A
+<br />$git status
+<br />$git commit
+
+<br />如果想把文件从Git仓库中删除（或从暂存区域移除），但仍留在当前目录中。
+<br />$git rm --cached A
+
+###7、移动文件---相当于改名
+<br />$git mv file_from file_to
+
+###8、查看提交历史
+<br />$git log
+<br />-p 选项展开显示每次提交的内容差异，用 -2 则仅显示最近的两次更新,例如$git log -p -2
+<br />--stat，仅显示简要的增改行数统计
+<br />制定格式显示记录$ git log --pretty=format:"%h - %an, %ar : %s"
+<br />表 2-1 列出了常用的格式占位符写法及其代表的意义。
+
+<br />选项   说明
+<br />%H  提交对象（commit）的完整哈希字串
+<br />%h  提交对象的简短哈希字串
+<br />%T  树对象（tree）的完整哈希字串
+<br />%t  树对象的简短哈希字串
+<br />%P  父对象（parent）的完整哈希字串
+<br />%p  父对象的简短哈希字串
+<br />%an 作者（author）的名字
+<br />%ae 作者的电子邮件地址
+<br />%ad 作者修订日期（可以用 -date= 选项定制格式）
+<br />%ar 作者修订日期，按多久以前的方式显示
+<br />%cn 提交者(committer)的名字
+<br />%ce 提交者的电子邮件地址
+<br />%cd 提交日期
+<br />%cr 提交日期，按多久以前的方式显示
+<br />%s  提交说明
+
+###9、撤销操作
+####1）修改最后一次提交
+<br />$git commit --amend
+<br />例如:$git commit -m 'initial commit'
+<br />     $git add forgotted_file
+<br />     $git commit --amend
+####2）取消暂存的文件
+<br />add文件后，想撤销，可用git reset HEAD
+<br />$git reset HEAD A(A文件本地修改，未提交到git库中)
+<br />$git status
+####3）取消对文件的修改
+<br />$git checkout --benchmarks.rb
+<br />$git status
+
+###10、远程仓库的使用
+####1）查看当前配置的远程仓库
+<br />$ git remote -v
+####2）添加一个远程仓库
+<br />git remote add [shortname] [url]：
+<br />$ git remote
+<br />origin
+<br />$ git remote add pb git://github.com/paulboone/ticgit.git
+<br />$ git remote -v
+<br />origin  git://github.com/schacon/ticgit.git
+<br />pb  git://github.com/paulboone/ticgit.git
+
+####3）从远程仓库抓取数据
+<br />$git fetch [remote-name]
+####4)推送数据到远程仓库
+<br />git push [remote-name] [branch-name]
+####5）查看远程仓库的信息
+<br />git remote show [remote-name]
+####6）远程仓库的删除和命名
+<br />$git remote rename A B
+<br />$git remote
+
+<br />$git remote rm A
+<br />$git remote 
+
+###11、打标签
+<br />$git tag V0.1 v1.3(列出已有的标签)
+####1）创建含备注的标签
+<br />$git tag -a v1.4 -m'my version 1.4'
+<br />$git tag
+<br />-m  标签说明
+<br />$git show v1.4
+
+
+
+
+
+
